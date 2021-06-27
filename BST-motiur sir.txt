@@ -1,0 +1,85 @@
+#include<iostream>
+using namespace std;
+struct node {
+	int data = 0;
+	node* right = nullptr;
+	node* left = nullptr;
+};
+void insert(node*& n, int i) {
+	if (n == nullptr) {
+		n = new node;
+		n->data = i;
+		n->right = nullptr;
+		n->left = nullptr;
+	}
+	else if (i > n->data) {
+		insert(n->right, i);
+	}
+	else if (i < n->data) {
+		insert(n->left, i);
+	}
+}
+void printdata(node* a) {
+	if (a == nullptr) {
+		return;
+	}
+	
+	printdata(a->left);
+	cout << a->data << endl;
+	printdata(a->right);
+}
+bool find(node* n, int i) {
+	if (n == nullptr) {
+		return false;
+	}
+	else if (n->data == i) {
+		return true;
+	}
+	else if (i > n->data) {
+		find(n->right, i);
+	}
+	else if (i < n->data) {
+		find(n->left, i);
+	}
+}
+bool findposition(node* n, int i, int& position) {
+	if (n == nullptr) {
+		return false;
+	}
+	else if (n->data == i) {
+		cout << position << endl;
+		return true;
+	}
+	position += 1;
+	findposition(n->right, i, position);
+	findposition(n->left, i, position);
+}
+
+int numleave(node* a) {
+	if (a == NULL) {
+		return NULL;
+	}
+	else if (a->left == nullptr && a->right == nullptr) {
+		return 1;
+	}
+	return (numleave(a->right) + numleave(a->left));
+}
+int numnode(node* a) {
+	if (a == nullptr) {
+		return NULL;
+	}
+	return 1+numnode(a->left)+numnode(a->right);
+}
+int main() {
+	node* a = NULL;
+	insert(a, 10);
+	insert(a, 11);
+	insert(a, 9);
+	//cout << numleave(a) << endl;
+	insert(a, 19);
+	insert(a, 29);
+	insert(a, -9);
+	//cout << numnode(a) << endl;
+	//printdata(a);
+
+}
